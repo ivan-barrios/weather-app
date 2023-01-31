@@ -1,3 +1,5 @@
+import renderPage from './domFunctions';
+
 //Gets location from the form input
 function getLocationFromForm() {
     const city = document.getElementById('locationInput').value;
@@ -38,11 +40,22 @@ async function getWeatherData() {
     if (city !== '') {
         const coords = await getCoords(city);
         const response = await fetch(getWeatherUrl(coords.lat, coords.lon));
-        const weatherData = response.json();
-        return weatherData;
+        const weatherData = await response.json();
+        const weather = getOnlyWhatIsNeeded(weatherData);
+        renderPage(weather);
     }
-    return;
 }
 
+function getOnlyWhatIsNeeded(weatherData) {
+    const weather = {};
+    weather.temp = weatherData.main.temp;
+    weather.feelsLike = weatherData.main.feels_like;
+    weather.tempMin = weatherData.main.temp_min;
+    weather.tempMax = weatherData.main.temp_max;
+    weather.desc = weatherData.weather[0].main;
+    weather.name = weatherData.name;
+    weather.country = weatherData.sys.country;
+    return weather;
+}
 
 export default getWeatherData;
