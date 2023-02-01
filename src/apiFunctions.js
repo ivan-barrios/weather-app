@@ -1,4 +1,4 @@
-import renderPage from './domFunctions';
+import {renderPage, displayError} from './domFunctions';
 
 //Gets location from the form input
 function getLocationFromForm() {
@@ -35,14 +35,18 @@ async function getCoords(city) {
 }
 
 //Returns the weather data from the specified city
-async function getWeatherData() {
-    const city = getLocationFromForm();
-    if (city !== '') {
-        const coords = await getCoords(city);
-        const response = await fetch(getWeatherUrl(coords.lat, coords.lon));
-        const weatherData = await response.json();
-        const weather = getOnlyWhatIsNeeded(weatherData);
-        renderPage(weather);
+async function getWeatherData(city) {
+    try {
+        if (city !== '') {
+            const coords = await getCoords(city);
+            const response = await fetch(getWeatherUrl(coords.lat, coords.lon));
+            const weatherData = await response.json();
+            const weather = getOnlyWhatIsNeeded(weatherData);
+            renderPage(weather);
+        }
+    }
+    catch (error) {
+        displayError();
     }
 }
 
@@ -58,4 +62,4 @@ function getOnlyWhatIsNeeded(weatherData) {
     return weather;
 }
 
-export default getWeatherData;
+export {getWeatherData, getLocationFromForm};

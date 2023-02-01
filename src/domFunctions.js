@@ -1,13 +1,17 @@
 
+function displayError() {
+    const errorMsg = document.querySelector('.error-msg');
 
-
-
-
+    errorMsg.textContent = 'Could not find that city, please check it.';
+}
 
 
 
 
 function renderPage(weather) {
+    const errorMsg = document.querySelector('.error-msg');
+    errorMsg.textContent = '';
+
     const location = document.getElementById('location');
     const description = document.getElementById('description');
     const mainTemperature = document.getElementById('mainTemperature');
@@ -25,4 +29,4 @@ function renderPage(weather) {
 
 
 
-export default renderPage;
+export {renderPage, displayError};

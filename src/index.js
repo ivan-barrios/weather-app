@@ -1,6 +1,11 @@
-import getWeatherData from "./apiFunctions";
+import { getWeatherData, getLocationFromForm } from "./apiFunctions";
+
+//Default Render
+getWeatherData('La Plata');
+
 
 document.getElementById('submitBtn').addEventListener('click', (event) => {
     event.preventDefault();
-    getWeatherData();
+    const city = getLocationFromForm();
+    getWeatherData(city);
 });
