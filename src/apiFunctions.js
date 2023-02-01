@@ -10,7 +10,7 @@ function getLocationFromForm() {
         return city
     }
     return '';
-}
+} 
 
 
 
